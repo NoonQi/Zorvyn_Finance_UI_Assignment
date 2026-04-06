@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PinkFinance | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="top-banner">
+        <div class="logo-area">
+            <h2 class="brand-text">PinkFinance </h2>
+        </div>
+        <div class="banner-stats">
+            <div class="banner-item"><span class="label">EXPENSES</span><span class="value expense-color" id="totalExpenses">$0</span></div>
+            <div class="banner-item"><span class="label">INCOME</span><span class="value income-color" id="totalIncome">$0</span></div>
+            <div class="banner-item"><span class="label">BALANCE</span><span class="value balance-box" id="totalBalance">$0</span></div>
+        </div>
+        <button class="add-record-btn" id="addBtn" onclick="openAddModal()">
+            <i class="fas fa-plus"></i>
+        </button>
+    </header>
+
+    <div class="layout">
+       <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+        <div class="sidebar-section">
+            <span class="label-sm">View Period</span>
+            <div class="ctrl-row">
+                <select id="monthSelect" class="pink-select-mini" onchange="updateDateContext()">
+                    <option value="0">Jan</option><option value="1">Feb</option>
+                    <option value="2">Mar</option><option value="3" selected>Apr</option>
+                    <option value="4">May</option><option value="5">Jun</option>
+                    <option value="6">Jul</option><option value="7">Aug</option>
+                    <option value="8">Sep</option><option value="9">Oct</option>
+                    <option value="10">Nov</option><option value="11">Dec</option>
+                </select>
+                <select id="yearSelect" class="pink-select-mini" onchange="updateDateContext()">
+                    <option value="2025">2025</option><option value="2026" selected>2026</option>
+                </select>
+            </div>
+        </div>
+        
+        <nav class="menu">
+            <button onclick="showPage('records')" id="btn-records" class="menu-item active">
+                <i class="fas fa-history"></i> <span>History</span>
+            </button>
+            <button onclick="showPage('charts')" id="btn-charts" class="menu-item">
+                <i class="fas fa-chart-pie"></i> <span>Analytics</span>
+            </button>
+            <button onclick="showPage('reports')" id="btn-reports" class="menu-item">
+                <i class="fas fa-file-invoice"></i> <span>Ledger</span>
+            </button>
+        </nav>
+
+        <div class="currency-helper-box">
+            <span class="label-sm">Currency Helper</span>
+            <input type="number" id="convAmount" class="pink-input" placeholder="Amount ($)" oninput="convertCurrency()">
+            <select id="targetCurrency" class="pink-input" onchange="convertCurrency()">
+                <option value="INR">INR (India)</option>
+                <option value="EUR">EUR (Europe)</option>
+                <option value="GBP">GBP (UK)</option>
+                <option value="MXN">MXN (Mexico)</option>
+                <option value="PHP">PHP (Philippines)</option>
+            </select>
+            <p class="conv-text">Result: <span id="convResult">0.00</span></p>
+        </div>
+
+        <div class="sidebar-footer">
+            <select id="roleSelect" class="pink-input" onchange="updateRole()">
+                <option value="admin">Admin Mode</option>
+                <option value="viewer">Viewer Mode</option>
+            </select>
+            <div class="footer-actions">
+                <button onclick="toggleTheme()" class="footer-btn"><i class="fas fa-moon"></i></button>
+                <button onclick="toggleSidebar()" class="footer-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
+</aside>
+        <main class="content-area" id="mainDisplay"></main>
+    </div>
+
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <h3>New Transaction</h3>
+            <input type="text" id="itemName" class="pink-input" placeholder="Item Name">
+            <input type="number" id="itemAmount" class="pink-input" placeholder="Amount ($)">
+            <select id="itemType" class="pink-input">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <div class="modal-btns">
+                <button onclick="saveRecord()" class="footer-btn pink-solid">Save</button>
+                <button onclick="closeAddModal()" class="footer-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
